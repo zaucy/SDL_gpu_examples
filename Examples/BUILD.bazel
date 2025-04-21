@@ -1,0 +1,25 @@
+load("@rules_cc//cc:defs.bzl", "cc_binary")
+
+package(default_visibility = ["//visibility:public"])
+
+cc_binary(
+    name = "SDL_gpu_examples",
+    srcs = glob([
+        "*.c",
+        "*.h",
+    ]),
+    data = [
+        "//Content/Images",
+        "//Content/Shaders/Compiled",
+    ],
+    deps = [
+        "//:stb_image",
+        "@sdl3",
+        "@sdl3//:main",
+    ],
+)
+
+alias(
+    name = "Examples",
+    actual = ":SDL_gpu_examples",
+)

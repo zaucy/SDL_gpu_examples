@@ -46,7 +46,14 @@ void CommonQuit(Context* context)
 static const char* BasePath = NULL;
 void InitializeAssetLoader()
 {
-	BasePath = SDL_GetBasePath();
+	const char* BazelWorkignDirectory = getenv("BUILD_WORKING_DIRECTORY");
+	if(BazelWorkignDirectory) {
+		static char BazelWorkignDirectoryWithSlash[1024];
+		sprintf(BazelWorkignDirectoryWithSlash, "%s/", BazelWorkignDirectory);
+		BasePath = BazelWorkignDirectoryWithSlash;
+	} else {
+		BasePath = SDL_GetBasePath();
+	}
 }
 
 SDL_GPUShader* LoadShader(
